@@ -33,10 +33,6 @@ import {
         @Column()
         phoneNumber: string
 
-        
-        @Column({nullable: true})
-        role: string
-
         @CreateDateColumn()
         createdAt : String
      

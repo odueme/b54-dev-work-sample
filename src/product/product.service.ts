@@ -28,10 +28,9 @@ export class ProductService {
    }
 
    async delete(id: number, user: Users): Promise<DeleteResult> {
-       if (user.role == 'admin') {
+       
            return await this.productRepository.delete(id);
-       }
-       throw new UnauthorizedException();
+       
    }
   
 }
