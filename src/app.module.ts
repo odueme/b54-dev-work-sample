@@ -24,7 +24,7 @@ import { ProductEntity } from './product/product.entity';
     port: 3306, 
     username: 'root',
     password: 'perfectman123@',
-    database: 'Orders',
+    database: 'userOrdersdb',
     entities: [CartEntity, Users, ProductEntity],
     synchronize: false,
   })
