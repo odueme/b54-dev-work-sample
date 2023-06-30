@@ -26,7 +26,7 @@ import { ProductEntity } from './product/product.entity';
     password: 'perfectman123@',
     database: 'userOrdersdb',
     entities: [CartEntity, Users, ProductEntity],
-    synchronize: false,
+    synchronize: true,
   })
   ],
   controllers: [AppController],
