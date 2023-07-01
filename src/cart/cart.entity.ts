@@ -5,13 +5,22 @@ import { Users } from 'src/auth/user.entity'
 
 @Entity()
 export class CartEntity {
-   @PrimaryGeneratedColumn()
+   @PrimaryGeneratedColumn({
+      type: 'bigint',
+      name: 'user_id'
+  })
    id: number
 
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    total: number
 
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    quantity: number
   
    @ManyToOne(type => ProductEntity, item => item.id)

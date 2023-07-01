@@ -17,20 +17,35 @@ import {
  
     @Entity()
     export class Users{
-        @PrimaryGeneratedColumn()
+        @PrimaryGeneratedColumn({
+            type: 'bigint',
+            name: 'user_id'
+        })
         Id: number
 
-        @Column()
+        @Column({
+            nullable: false,
+            default: ''
+        })
         username: string
 
-        @Column()
+        @Column({
+            nullable: false,
+            default: ''
+        })
         password: string
      
 
-        @Column()
+        @Column({
+            nullable: false,
+            default: ''
+        })
         email: string
 
-        @Column()
+        @Column({
+            nullable: false,
+            default: ''
+        })
         phoneNumber: string
 
         @CreateDateColumn()

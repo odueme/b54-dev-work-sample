@@ -3,22 +3,40 @@ import { CartEntity } from 'src/cart/cart.entity'
 
 @Entity()
 export class ProductEntity {
-   @PrimaryGeneratedColumn()
+   @PrimaryGeneratedColumn({
+      type: 'bigint',
+      name: 'user_id'
+  })
    id: number
 
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    name: string
 
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    price: number
    
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    quantity: string
 
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    description: string
 
-   @Column()
+   @Column({
+      nullable: false,
+      default: ''
+  })
    img: string
 
    @CreateDateColumn()  
