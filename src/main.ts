@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'https://dev-work-sample-2k3t.onrender.com',
+    origin: 'https://fanciful-treacle-ff4cc5.netlify.app/',
     credentials: true,
   });
 
