@@ -9,8 +9,9 @@ import { Users } from './auth/user.entity';
 import { CartEntity } from './cart/cart.entity';
 import { ProductEntity } from './product/product.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import entities from './index'
 import { config } from 'process';
+
 
 
 
