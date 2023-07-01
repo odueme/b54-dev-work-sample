@@ -13,13 +13,13 @@ export class CartEntity {
 
    @Column({
       nullable: false,
-      default: ''
+   
   })
    total: number
 
    @Column({
       nullable: false,
-      default: ''
+   
   })
    quantity: number
   
