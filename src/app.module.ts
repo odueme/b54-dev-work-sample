@@ -32,7 +32,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     password: configService.get('DATABASE_URL '),
     database: configService.get('DATABASE_URL '),
     entities: [CartEntity, Users, ProductEntity],
-    synchronize: true,
+    synchronize: false,
   }),
   inject: [ConfigService]
   }),
