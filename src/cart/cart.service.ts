@@ -38,15 +38,16 @@ export class CartService {
         (item) =>
           item.item.id === productId && item.user.username === user
       );
-      client.messages.create({
-        from: '+14177964331',
-        to: `+234${authUser.phoneNumber}`,
-        body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${product.price}, quantity: ${quantity}`,
-      });
+   
   
       if (existingCartItem) {
         existingCartItem.quantity += quantity;
         existingCartItem.total = product.price * existingCartItem.quantity;
+        client.messages.create({
+          from: '+14177964331',
+          to: `+234${authUser.phoneNumber}`,
+          body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${product.price}, quantity: ${quantity}`,
+        });
         return await this.cartRepository.save(existingCartItem);
       }
   
@@ -55,6 +56,11 @@ export class CartService {
         item: product,
         total: product.price * quantity,
         quantity: quantity,
+      });
+      client.messages.create({
+        from: '+14177964331',
+        to: `+234${authUser.phoneNumber}`,
+        body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${product.price}, quantity: ${quantity}`,
       });
   
       return await this.cartRepository.save(newItem);
