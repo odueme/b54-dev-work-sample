@@ -49,7 +49,7 @@ export class CartService {
           user: user,
           item: item,
           total: product.price * sum,
-          sum,
+          quantity: sum,
         });
         
     
