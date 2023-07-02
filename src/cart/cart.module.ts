@@ -6,9 +6,10 @@ import { Users } from 'src/auth/user.entity'
 import { CartService } from './cart.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CartController } from './cart.controller';
+import { ConfigModule} from '@nestjs/config';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([CartEntity, ProductEntity, Users])],
+    imports: [ConfigModule, TypeOrmModule.forFeature([CartEntity, ProductEntity, Users])],
  providers: [CartService, ProductService],
  controllers: [CartController],
 })
