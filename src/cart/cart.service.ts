@@ -53,7 +53,7 @@ const client = require('twilio')(accountSid, authToken)
         client.messages.create({
           from: '+14177964331',
           to: `+234${authUser.phoneNumber}`,
-          body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${product.price}, quantity: ${quantity}`,
+          body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${existingCartItem.total}, quantity: ${quantity}`,
         });
         return await this.cartRepository.save(existingCartItem);
       }
