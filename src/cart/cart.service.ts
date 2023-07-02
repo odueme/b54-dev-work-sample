@@ -5,7 +5,7 @@ import { CartEntity } from './cart.entity';
 import { ProductService } from 'src/product/product.service';
 import { Users } from 'src/auth/user.entity';
 const accountSid = 'AC75105157ee5d0bc3ce92eaa1d573d067'
-const authToken = '15d0ebf5ad34a01c10efdcae68ad2425'
+const authToken = '0eb6f06e294491f2f6f5c7714aa4807b'
 const client = require('twilio')(accountSid, authToken)
 @Injectable()
 export class CartService {
