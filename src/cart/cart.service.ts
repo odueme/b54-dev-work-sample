@@ -4,9 +4,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CartEntity } from './cart.entity';
 import { ProductService } from 'src/product/product.service';
 import { Users } from 'src/auth/user.entity';
-const accountSid = 'AC75105157ee5d0bc3ce92eaa1d573d067'
-const authToken = '15d0ebf5ad34a01c10efdcae68ad2425'
-const client = require('twilio')(accountSid, authToken)
+import { ConfigService } from '@nestjs/config';
+
+
+
+
 @Injectable()
 export class CartService {
   
@@ -16,6 +18,8 @@ export class CartService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
     private productsService: ProductService,
+    private configService: ConfigService,
+
   ) {}
 
   async addToCart(
@@ -26,6 +30,9 @@ export class CartService {
     const cartItems = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
+    const accountSid = this.configService.get<string>('twilio.accountSid');
+const authToken = this.configService.get<string>('twilio.authToken');
+const client = require('twilio')(accountSid, authToken)
   
     const product = await this.productsService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
