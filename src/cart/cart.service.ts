@@ -56,7 +56,7 @@ const vonage = new Vonage({
         existingCartItem.total = product.price * existingCartItem.quantity;
         async function sendSMS() {
           await vonage.sms.send({to: `234${authUser.phoneNumber}`, from: "Vonage APIs", text: `Hello ${authUser.username}
-          your order is Name:${product.name} decription: ${product.decription} 
+          your order is Name:${product.name} decription: ${product.description} 
           total: ${product.price * existingCartItem.quantity}`})
               .then(resp => { console.log('Message sent successfully'); console.log(resp); })
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
