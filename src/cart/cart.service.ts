@@ -34,7 +34,7 @@ export class CartService {
    
 
 const vonage = new Vonage({
-  apiKey: '1232323424',
+  apiKey: this.configService.get<string>('apiKey'),
   apiSecret: this.configService.get<string>('apiSecret')
 })
   
