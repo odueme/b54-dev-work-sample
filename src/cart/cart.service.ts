@@ -30,9 +30,13 @@ export class CartService {
     const cartItems = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
-    const accountSid = this.configService.get<string>('twilio.accountSid');
-const authToken = this.configService.get<string>('twilio.authToken');
-const client = require('twilio')(accountSid, authToken)
+    const { Vonage } = require('@vonage/server-sdk')
+   
+
+const vonage = new Vonage({
+  apiKey: this.configService.get<string>('apiKey'),
+  apiSecret: this.configService.get<string>('apiSecret')
+})
   
     const product = await this.productsService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
@@ -50,11 +54,14 @@ const client = require('twilio')(accountSid, authToken)
       if (existingCartItem) {
         existingCartItem.quantity += quantity;
         existingCartItem.total = product.price * existingCartItem.quantity;
-        client.messages.create({
-          from: '+14177964331',
-          to: `+234${authUser.phoneNumber}`,
-          body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${existingCartItem.total}, quantity: ${quantity}`,
-        });
+        async function sendSMS() {
+          await vonage.sms.send({to:  `${authUser.phoneNumber}`, from: "Vonage APIs", text: `Hello ${authUser.username}
+          your order is Name:${product.name} decription: ${product.decription} 
+          total: ${product.price * existingCartItem.quantity}`})
+              .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+              .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+      }
+      sendSMS();
         return await this.cartRepository.save(existingCartItem);
       }
   
@@ -64,11 +71,13 @@ const client = require('twilio')(accountSid, authToken)
         total: product.price * quantity,
         quantity: quantity,
       });
-      client.messages.create({
-        from: '+14177964331',
-        to: `+234${authUser.phoneNumber}`,
-        body: `Hello ${authUser.username}, this is your order. Name: ${product.name}, price: ${product.price}, quantity: ${quantity}`,
-      });
+      async function sendSMS() {
+        await vonage.sms.send({to: `${authUser.phoneNumber}`, from: "Vonage APIs", text: `Hello ${authUser.username}
+        your order is Name:${product.name} decription: ${product.decription} total: ${product.price * quantity}` })
+            .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+            .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+    }
+    sendSMS();
   
       return await this.cartRepository.save(newItem);
     }

@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/class-validator": "^0.13.4",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.0.0",
@@ -28,9 +29,14 @@
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
+    "@sendgrid/mail": "^7.7.0",
+    "@types/nodemailer": "^6.4.8",
+    "@vonage/server-sdk": "^3.6.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
+    "handlebars": "^4.7.7",
     "mysql2": "^3.4.3",
+    "nodemailer": "^6.9.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
