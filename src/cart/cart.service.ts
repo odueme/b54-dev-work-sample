@@ -34,7 +34,7 @@ export class CartService {
    
 
 const vonage = new Vonage({
-  apiKey: this.configService.get<string>('apiKey'),
+  apiKey: '1232323424',
   apiSecret: this.configService.get<string>('apiSecret')
 })
   
@@ -55,7 +55,7 @@ const vonage = new Vonage({
         existingCartItem.quantity += quantity;
         existingCartItem.total = product.price * existingCartItem.quantity;
         async function sendSMS() {
-          await vonage.sms.send({to:  `${authUser.phoneNumber}`, from: "Vonage APIs", text: `Hello ${authUser.username}
+          await vonage.sms.send({to: `${authUser.phoneNumber}`, from: "Vonage APIs", text: `Hello ${authUser.username}
           your order is Name:${product.name} decription: ${product.decription} 
           total: ${product.price * existingCartItem.quantity}`})
               .then(resp => { console.log('Message sent successfully'); console.log(resp); })
