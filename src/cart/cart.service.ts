@@ -84,11 +84,12 @@ export class CartService {
       if(item.user.username === user){
         const username = item.user.username
         const userCartItems = item.user.cart
+        const phone = item.user.phoneNumber
         client.messages.create({
           body: `Hello ${username} your order is 
            ${userCartItems}`,
           from: '+447446283439', 
-          to: `+234${item.user.phoneNumber}`
+          to: `+234${phone}`
             })
             .then((message) => console.log(`Message sent. SID: ${message.sid}`))
             .catch((error) => console.error(`Error sending message: ${error}`));
