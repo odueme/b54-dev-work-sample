@@ -78,8 +78,7 @@ const accountSid = this.configService.get<string>('accountSid')
         quantity: quantity,
       });
       client.messages.create({
-        body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} 
-        your total for this product: ${newItem.total}`,
+        body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} your total for this product: ${newItem.total}`,
         from: '+447446283439', 
         to: `+234${authUser.phoneNumber}`
           })
