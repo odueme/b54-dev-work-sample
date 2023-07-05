@@ -57,7 +57,9 @@ const accountSid = this.configService.get<string>('accountSid')
         existingCartItem.total = product.price * existingCartItem.quantity;
         async function sendSMS() {
           client.messages.create({
-          body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} 
+          body: `Hello ${authUser.username} your order is 
+          Name:${product.name}
+          decription: ${product.description} 
           your total for this product: ${product.price * existingCartItem.quantity}`,
           from: '+447446283439', 
           to: `+234${authUser.phoneNumber}`
