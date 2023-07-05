@@ -58,7 +58,7 @@ const accountSid = this.configService.get<string>('accountSid')
         async function sendSMS() {
           client.messages.create({
           body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} 
-          total: ${product.price * existingCartItem.quantity}`,
+          your total for this product: ${product.price * existingCartItem.quantity}`,
           from: '+447446283439', 
           to: `+234${authUser.phoneNumber}`
             })
@@ -77,7 +77,7 @@ const accountSid = this.configService.get<string>('accountSid')
       });
       client.messages.create({
         body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} 
-        total: ${newItem.total}`,
+        your total for this product: ${newItem.total}`,
         from: '+447446283439', 
         to: `+234${authUser.phoneNumber}`
           })
