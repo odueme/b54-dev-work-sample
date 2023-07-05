@@ -87,7 +87,10 @@ export class CartService {
         const phone = item.user.phoneNumber
         client.messages.create({
           body: `Hello ${username} your order is 
-           ${userCartItems}`,
+           ${item.item.name} 
+           ${item.item.price}
+           ${item.item.quantity}
+           ${item.item.description}`,
           from: '+447446283439', 
           to: `+234${phone}`
             })
