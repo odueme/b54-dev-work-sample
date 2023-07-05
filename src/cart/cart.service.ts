@@ -5,6 +5,7 @@ import { CartEntity } from './cart.entity';
 import { ProductService } from 'src/product/product.service';
 import { Users } from 'src/auth/user.entity';
 import { ConfigService } from '@nestjs/config';
+import { use } from 'passport';
 
 
 
@@ -34,18 +35,16 @@ export class CartService {
    
 
 
-const accountSid = this.configService.get<string>('accountSid')
-  const authToken = this.configService.get<string>('authToken')
-  
-  const client = require('twilio')(accountSid, authToken);
+
   
     const product = await this.productsService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
   
     // Confirm the product and user exist.
     if (product && authUser) {
-    
-  
+      
+      
+      
       const existingCartItem = cartItems.find(
         (item) =>
           item.item.id === productId && item.user.username === user
@@ -55,19 +54,6 @@ const accountSid = this.configService.get<string>('accountSid')
       if (existingCartItem) {
         existingCartItem.quantity += quantity;
         existingCartItem.total = product.price * existingCartItem.quantity;
-        async function sendSMS() {
-          client.messages.create({
-          body: `Hello ${authUser.username} your order is 
-          Name:${product.name}
-          decription: ${product.description} 
-          your total for this product: ${product.price * existingCartItem.quantity}`,
-          from: '+447446283439', 
-          to: `+234${authUser.phoneNumber}`
-            })
-            .then((message) => console.log(`Message sent. SID: ${message.sid}`))
-            .catch((error) => console.error(`Error sending message: ${error}`));
-      }
-      sendSMS();
         return await this.cartRepository.save(existingCartItem);
       }
   
@@ -77,14 +63,7 @@ const accountSid = this.configService.get<string>('accountSid')
         total: product.price * quantity,
         quantity: quantity,
       });
-      client.messages.create({
-        body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} your total for this product: ${newItem.total}`,
-        from: '+447446283439', 
-        to: `+234${authUser.phoneNumber}`
-          })
-          .then((message) => console.log(`Message sent. SID: ${message.sid}`))
-          .catch((error) => console.error(`Error sending message: ${error}`));
-  
+    
       return await this.cartRepository.save(newItem);
     }
   
@@ -96,6 +75,21 @@ const accountSid = this.configService.get<string>('accountSid')
     const userCart = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
+    const accountSid = this.configService.get<string>('accountSid')
+  const authToken = this.configService.get<string>('authToken')
+  
+  const client = require('twilio')(accountSid, authToken);
+    userCart.filter(item =>{
+      client.messages.create({
+        body: `Hello ${item.user.username} your order is 
+         ${item.user.cart}`,
+        from: '+447446283439', 
+        to: `+234${item.user.phoneNumber}`
+          })
+          .then((message) => console.log(`Message sent. SID: ${message.sid}`))
+          .catch((error) => console.error(`Error sending message: ${error}`));
+    })
+    
     return (await userCart).filter((item) => item.user.username === user);
   }
 }
