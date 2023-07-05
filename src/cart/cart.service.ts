@@ -60,7 +60,7 @@ const accountSid = this.configService.get<string>('accountSid')
           body: `Hello ${authUser.username} your order is Name:${product.name} decription: ${product.description} 
           total: ${product.price * existingCartItem.quantity}`,
           from: '+447446283439', 
-          to: `234${authUser.phoneNumber}`
+          to: `+234${authUser.phoneNumber}`
             })
             .then((message) => console.log(`Message sent. SID: ${message.sid}`))
             .catch((error) => console.error(`Error sending message: ${error}`));
