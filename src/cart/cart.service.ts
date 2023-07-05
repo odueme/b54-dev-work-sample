@@ -88,7 +88,7 @@ export class CartService {
 
         client.messages.create({
           body: `Hello ${username} your order is  Name:${item.item.name} item price${item.item.price}
-           item description${item.item.description} your total:${item.quantity * item.item.price}`,
+           item description${item.item.description} your total for the product:${item.total}`,
           from: '+447446283439', 
           to: `+234${phone}`
             })
