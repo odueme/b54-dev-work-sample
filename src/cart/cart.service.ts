@@ -78,16 +78,22 @@ export class CartService {
     const accountSid = this.configService.get<string>('accountSid')
   const authToken = this.configService.get<string>('authToken')
   
+  
   const client = require('twilio')(accountSid, authToken);
     userCart.filter(item =>{
-      client.messages.create({
-        body: `Hello ${item.user.username} your order is 
-         ${item.user.cart}`,
-        from: '+447446283439', 
-        to: `+234${item.user.phoneNumber}`
-          })
-          .then((message) => console.log(`Message sent. SID: ${message.sid}`))
-          .catch((error) => console.error(`Error sending message: ${error}`));
+      if(item.user.username === user){
+        const username = item.user.username
+        const userCartItems = item.user.cart
+        client.messages.create({
+          body: `Hello ${username} your order is 
+           ${userCartItems}`,
+          from: '+447446283439', 
+          to: `+234${item.user.phoneNumber}`
+            })
+            .then((message) => console.log(`Message sent. SID: ${message.sid}`))
+            .catch((error) => console.error(`Error sending message: ${error}`));
+      }
+     
     })
     
     return (await userCart).filter((item) => item.user.username === user);
