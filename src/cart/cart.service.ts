@@ -30,13 +30,14 @@ export class CartService {
     const cartItems = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
-    const { Vonage } = require('@vonage/server-sdk')
+    
    
 
 
 const accountSid = this.configService.get<string>('accountSid')
   const authToken = this.configService.get<string>('apiSecret')
-  const client = require('twilio')(accountSid, authToken);
+  const password = this.configService.get<string>('password')
+  const client = require('twilio')(accountSid, authToken, password);
   
     const product = await this.productsService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
