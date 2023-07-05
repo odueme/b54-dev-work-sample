@@ -57,6 +57,7 @@ export class CartService {
         return await this.cartRepository.save(existingCartItem);
       }
   
+      
       const newItem = this.cartRepository.create({
         user: authUser,
         item: product,
@@ -83,14 +84,11 @@ export class CartService {
     userCart.filter(item =>{
       if(item.user.username === user){
         const username = item.user.username
-        const userCartItems = item.item
         const phone = item.user.phoneNumber
+
         client.messages.create({
-          body: `Hello ${username} your order is 
-           ${item.item.name} 
-           ${item.item.price}
-           ${item.item.quantity}
-           ${item.item.description}`,
+          body: `Hello ${username} your order is  Name:${item.item.name} item price${item.item.price}
+           item description${item.item.description} your total:${item.quantity * item.item.price}`,
           from: '+447446283439', 
           to: `+234${phone}`
             })
