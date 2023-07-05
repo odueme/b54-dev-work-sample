@@ -83,7 +83,7 @@ export class CartService {
     userCart.filter(item =>{
       if(item.user.username === user){
         const username = item.user.username
-        const userCartItems = item.user.cart
+        const userCartItems = item.item
         const phone = item.user.phoneNumber
         client.messages.create({
           body: `Hello ${username} your order is 
