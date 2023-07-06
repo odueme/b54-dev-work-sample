@@ -90,13 +90,10 @@ export class CartService {
         const phone = item.user.phoneNumber
 
        const transporter = nodemailer.createTransport({
-        host: "smtp-relay.brevo.com",
-        port: 587,
-        secure: false,
-
+        service: "gmail",
         auth: {
           user: "uodueme@gmail.com",
-          pass: "perfectman"
+          pass: "rcnbvkjsujncjuhs"
         }
        })
 
