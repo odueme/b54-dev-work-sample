@@ -88,35 +88,30 @@ export class CartService {
         const username = item.user.username
         const phone = item.user.phoneNumber
 
-        let testAccount = nodemailer.createTestAccount()
+       const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "Uzoezi223@outlook.com",
+          pass: "perfectman123"
+        }
+       })
 
-        let transporter = nodemailer.createTransport({
-          host: "smtp.ethereal.email",
-          port: 587,
-          secure: false,
-          auth: {
-            user: testAccount.user,
-            pass: testAccount.pass 
-          }
-        })
+       const options = {
+        from: "Uzoezi123@outlook.com",
+        to: "uodueme@gmail.com",
+        subject: "sending email with node",
+        text: "simple"
+       }
 
-        const message = {
-          from: '"Fred Foo 👻" <foo@example.com>', 
-          to: "bar@example.com, baz@example.com",
-          subject: "Hello ✔",
-          text: "Hello world?", 
-          html: "<b>Hello world?</b>"
-        };
+       transporter.sendMail(options, (err, info) =>{
+        if(err){
+          console.log(err)
+          return
+        }
+        console.log(info.response)
 
-        transporter.sendMail(message).then((info) => {
-         return response.status(201).json({
-          message: "you should receive an email",
-          info: info.id,
-          preview: nodemailer.getTestMessageUrl(info)
-        })
-        }).catch(error =>{
-          return response.status(500).json({error})
-        })
+       })
+        
 
         // client.messages.create({
         //   body: `Hello ${ username} your order is  Name : ${item.item.name} Item price : ${item.item.price} Item description:${item.item.description} Your total for this product : ${item.total}`,
