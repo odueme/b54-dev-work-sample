@@ -91,13 +91,13 @@ export class CartService {
        const transporter = nodemailer.createTransport({
         service: "hotmail",
         auth: {
-          user: "Uzoezi223@outlook.com",
+          user: "Odueme2082@student.babcock.edu.ng",
           pass: "perfectman123"
         }
        })
 
        const options = {
-        from: "Uzoezi123@outlook.com",
+        from: "Odueme2082@student.babcock.edu.ng",
         to: "uodueme@gmail.com",
         subject: "sending email with node",
         text: "simple"
