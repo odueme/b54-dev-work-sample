@@ -99,7 +99,7 @@ export class CartService {
 
        const options = {
         from: "uodueme@gmail.com",
-        to: "odueme2082@student.babcok.edu.ng",
+        to: "odueme2082@student.babcock.edu.ng",
         subject: "sending email with node",
         text: "simple"
        }
