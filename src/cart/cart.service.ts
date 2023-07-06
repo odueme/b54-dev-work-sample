@@ -87,7 +87,7 @@ export class CartService {
     userCart.filter(item =>{
       if(item.user.username === user){
         const username = item.user.username
-        const phone = item.user.phoneNumber
+        const phone = item.user.email
 
        const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -101,7 +101,7 @@ export class CartService {
         from: "uodueme@gmail.com",
         to: "odueme2082@student.babcock.edu.ng",
         subject: "sending email with node",
-        text: "simple"
+        text: `Hello ${username} your order is ${item}`
        }
 
        transporter.sendMail(options, (err, info) =>{
