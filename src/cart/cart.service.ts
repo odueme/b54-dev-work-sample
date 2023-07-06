@@ -24,6 +24,7 @@ export class CartService {
   ) {}
 
   async addToCart(
+    
     productId: number,
     quantity: number,
     user: string,
