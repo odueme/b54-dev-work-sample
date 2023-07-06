@@ -5,10 +5,11 @@ import { CartEntity } from './cart.entity';
 import { ProductService } from 'src/product/product.service';
 import { Users } from 'src/auth/user.entity';
 import { ConfigService } from '@nestjs/config';
-import { use } from 'passport';
+import { response } from 'express';
 
 
 
+const nodemailer = require('nodemailer')
 
 @Injectable()
 export class CartService {
@@ -77,23 +78,53 @@ export class CartService {
     const userCart = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
-    const accountSid = this.configService.get<string>('accountSid')
-  const authToken = this.configService.get<string>('authToken')
+  //   const accountSid = this.configService.get<string>('accountSid')
+  // const authToken = this.configService.get<string>('authToken')
   
   
-  const client = require('twilio')(accountSid, authToken);
+  // const client = require('twilio')(accountSid, authToken);
     userCart.filter(item =>{
       if(item.user.username === user){
         const username = item.user.username
         const phone = item.user.phoneNumber
 
-        client.messages.create({
-          body: `Hello ${ username} your order is  Name : ${item.item.name} Item price : ${item.item.price} Item description:${item.item.description} Your total for this product : ${item.total}`,
-          from: '+447446283439', 
-          to: `+234${phone}`
-            })
-            .then((message) => console.log(`Message sent. SID: ${message.sid}`))
-            .catch((error) => console.error(`Error sending message: ${error}`));
+        let testAccount = nodemailer.createTestAccount()
+
+        let transporter = nodemailer.createTransport({
+          host: "smtp.ethereal.email",
+          port: 587,
+          secure: false,
+          auth: {
+            user: testAccount.user,
+            pass: testAccount.pass 
+          }
+        })
+
+        const message = {
+          from: '"Fred Foo 👻" <foo@example.com>', 
+          to: "bar@example.com, baz@example.com",
+          subject: "Hello ✔",
+          text: "Hello world?", 
+          html: "<b>Hello world?</b>"
+        };
+
+        transporter.sendMail(message).then((info) => {
+         return response.status(201).json({
+          message: "you should receive an email",
+          info: info.id,
+          preview: nodemailer.getTestMessageUrl(info)
+        })
+        }).catch(error =>{
+          return response.status(500).json({error})
+        })
+
+        // client.messages.create({
+        //   body: `Hello ${ username} your order is  Name : ${item.item.name} Item price : ${item.item.price} Item description:${item.item.description} Your total for this product : ${item.total}`,
+        //   from: '+447446283439', 
+        //   to: `+234${phone}`
+        //     })
+        //     .then((message) => console.log(`Message sent. SID: ${message.sid}`))
+        //     .catch((error) => console.error(`Error sending message: ${error}`));
       }
      
     })
