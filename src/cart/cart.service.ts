@@ -11,6 +11,7 @@ import { response } from 'express';
 
 const nodemailer = require('nodemailer')
 
+
 @Injectable()
 export class CartService {
   
@@ -100,7 +101,7 @@ export class CartService {
        })
 
        const options = {
-        from: "Uzoezi",
+        from: "odueme2082@student.babcok.edu.ng",
         to: "uodueme@gmail.com",
         subject: "sending email with node",
         text: "simple"
