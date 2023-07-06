@@ -101,8 +101,8 @@ export class CartService {
        })
 
        const options = {
-        from: "odueme2082@student.babcok.edu.ng",
-        to: "uodueme@gmail.com",
+        from: "uodueme@gmail.com",
+        to: "odueme2082@student.babcok.edu.ng",
         subject: "sending email with node",
         text: "simple"
        }
