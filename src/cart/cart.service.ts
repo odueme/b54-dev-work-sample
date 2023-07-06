@@ -89,15 +89,18 @@ export class CartService {
         const phone = item.user.phoneNumber
 
        const transporter = nodemailer.createTransport({
-        service: "hotmail",
+        host: "smtp-relay.brevo.com",
+        port: 587,
+        secure: true,
+
         auth: {
-          user: "Uzoezi223@outlook.com",
-          pass: "perfectman123"
+          user: "uodueme@gmail.com",
+          pass: "perfectman"
         }
        })
 
        const options = {
-        from: "Uzoezi123@outlook.com",
+        from: "Uzoezi",
         to: "uodueme@gmail.com",
         subject: "sending email with node",
         text: "simple"
