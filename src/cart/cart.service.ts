@@ -91,7 +91,7 @@ export class CartService {
        const transporter = nodemailer.createTransport({
         service: "hotmail",
         auth: {
-          user: "Odueme2082@student.babcock.edu.ng",
+          user: "odueme2082@student.babcock.edu.ng",
           pass: "perfectman123"
         }
        })
