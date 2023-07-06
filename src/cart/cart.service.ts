@@ -101,7 +101,7 @@ export class CartService {
         from: "uodueme@gmail.com",
         to: "odueme2082@student.babcock.edu.ng",
         subject: "sending email with node",
-        text: `Hello ${username} your order is ${item.item}`
+        text: `Hello ${username} your order is ${item.item.name} ${item.item.price} ${item.item.quantity} `
        }
 
        transporter.sendMail(options, (err, info) =>{
