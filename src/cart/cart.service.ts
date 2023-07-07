@@ -5,7 +5,7 @@ import { CartEntity } from './cart.entity';
 import { ProductService } from 'src/product/product.service';
 import { Users } from 'src/auth/user.entity';
 import { ConfigService } from '@nestjs/config';
-
+import { DeepPartial } from 'typeorm';
 
 
 
@@ -30,7 +30,7 @@ export class CartService {
     const product = await this.productsService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
   
-    // Confirm the product exists.
+    
     if (product) {
       const existingCartItem = cartItems.find(
         (item) => item.item.id === productId && item.user.username === user
@@ -47,14 +47,15 @@ export class CartService {
         item: product,
         total: product.price * quantity,
         quantity: quantity,
-        price: product.price, // Add this line to set the price property
-      });
+        price: product.price,
+      } as DeepPartial<CartEntity>);
   
       return await this.cartRepository.save(newItem);
     }
   
     return null;
   }
+  
   
   async getItemsInCard(user: string): Promise<CartEntity[]> {
     const userCart = await this.cartRepository.find({
