@@ -4,11 +4,14 @@ import { Repository, UpdateResult, DeleteResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/auth/user.entity';
 
+
+
 @Injectable()
 export class ProductService {
    constructor(@InjectRepository(ProductEntity) private productRepository: Repository<ProductEntity>) { }
   
    async getAll(): Promise<ProductEntity[]> {
+       
        return await this.productRepository.find()
    }
 
