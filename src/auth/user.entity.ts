@@ -17,7 +17,7 @@ import {
  
     @Entity()
     export class Users{
-        @PrimaryGeneratedColumn({})
+        @PrimaryGeneratedColumn()
         Id: number
 
         @Column({

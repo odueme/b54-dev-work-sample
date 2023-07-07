@@ -17,7 +17,7 @@ import { OrderModule } from './order/order.module';
         type: 'postgres',
         url: configService.get<string>('DB_URL'),
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),

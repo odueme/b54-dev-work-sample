@@ -12,7 +12,7 @@ export class OrderService {
    private orderRepository: Repository<OrderEntity>,
        @InjectRepository(Users)
        private userRepository: Repository<Users>,
-       private cartService: CartService) { }
+       private cartService: CartService) {}
 
        async order(user: string): Promise<any> {
     
