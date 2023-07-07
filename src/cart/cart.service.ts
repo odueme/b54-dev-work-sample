@@ -75,55 +75,41 @@ export class CartService {
   }
   
 
-  async getItemsInCard(user: string): Promise<CartEntity[]> {
+  async getItemsInCard(user: string, email: string): Promise<CartEntity[]> {
     const userCart = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
-  //   const accountSid = this.configService.get<string>('accountSid')
-  // const authToken = this.configService.get<string>('authToken')
-  
-  
-  // const client = require('twilio')(accountSid, authToken);
+   
+
+    let arr = []
+    const emailUser = await this.userRepository.findOneBy({email: email})
     userCart.filter(item =>{
-      if(item.user.username === user){
-        const username = item.user.username
-        const phone = item.user.email
-
-       const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "uodueme@gmail.com",
-          pass: "rcnbvkjsujncjuhs"
-        }
-       })
-
-       const options = {
-        from: "uodueme@gmail.com",
-        to: "odueme2082@student.babcock.edu.ng",
-        subject: "sending email with node",
-        text: `Hello ${username} your order is ${item.item.name} ${item.item.price} ${item.item.quantity} `
-       }
-
-       transporter.sendMail(options, (err, info) =>{
-        if(err){
-          console.log(err)
-          return
-        }
-        console.log(info.res)
-
-       })
-        
-
-        // client.messages.create({
-        //   body: `Hello ${ username} your order is  Name : ${item.item.name} Item price : ${item.item.price} Item description:${item.item.description} Your total for this product : ${item.total}`,
-        //   from: '+447446283439', 
-        //   to: `+234${phone}`
-        //     })
-        //     .then((message) => console.log(`Message sent. SID: ${message.sid}`))
-        //     .catch((error) => console.error(`Error sending message: ${error}`));
-      }
-     
+      arr.push({Name: item.item.name, price: item.item.price, Quantity: item.item.quantity})        
     })
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "uodueme@gmail.com",
+        pass: "rcnbvkjsujncjuhs"
+      }
+     })
+
+     const options = {
+      from: "uodueme@gmail.com",
+      to: "odueme2082@student.babcock.edu.ng",
+      subject: "sending email with node",
+      text: `Hello ${emailUser} your order is ${arr}`
+     }
+
+     transporter.sendMail(options, (err, info) =>{
+      if(err){
+        console.log(err)
+        return
+      }
+      console.log(info.res)
+
+     })
     
     return (await userCart).filter((item) => item.user.username === user);
   }
