@@ -4,7 +4,7 @@ import { Users } from 'src/auth/user.entity';
 
 @Entity()
 export class OrderEntity {
-   @PrimaryGeneratedColumn('uuid')
+   @PrimaryGeneratedColumn()
    id: number
 
    @OneToMany(type => ProductEntity, item => item.id)
