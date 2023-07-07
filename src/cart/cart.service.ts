@@ -75,7 +75,7 @@ export class CartService {
   }
   
 
-  async getItemsInCard(user: string, email: string): Promise<CartEntity[]> {
+  async getItemsInCard(user: string): Promise<CartEntity[]> {
     const userCart = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
@@ -84,6 +84,7 @@ export class CartService {
     let arr = []
     
     userCart.filter(item =>{
+      if(item.user.username === user){
       arr.push({Name: item.item.name, price: item.item.price, Quantity: item.item.quantity}) 
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -108,6 +109,7 @@ export class CartService {
         console.log(info.res)
   
        })       
+      }
     })
 
  

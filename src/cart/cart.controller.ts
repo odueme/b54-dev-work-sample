@@ -18,7 +18,7 @@ export class CartController {
    @Get()
    async getItemsInCart(@Request() req): Promise<CartEntity[]> {
     
-       return await this.cartService.getItemsInCard(req.user.username, req.user.email);
+       return await this.cartService.getItemsInCard(req.user.username);
 
    }
 }
