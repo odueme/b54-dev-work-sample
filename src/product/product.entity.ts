@@ -3,7 +3,10 @@ import { CartEntity } from 'src/cart/cart.entity'
 
 @Entity()
 export class ProductEntity {
-   @PrimaryGeneratedColumn()
+   @PrimaryGeneratedColumn({
+      type: 'bigint',
+      name: 'user_id'
+  })
    id: number
 
    @Column({

@@ -5,7 +5,10 @@ import { Users } from 'src/auth/user.entity'
 
 @Entity()
 export class CartEntity {
-   @PrimaryGeneratedColumn()
+   @PrimaryGeneratedColumn({
+      type: 'bigint',
+      name: 'user_id'
+  })
    id: number
 
    @Column({
