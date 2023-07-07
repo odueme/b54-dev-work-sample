@@ -18,7 +18,11 @@ import { OrderModule } from './order/order.module';
         url: configService.get<string>('DB_URL'),
         autoLoadEntities: true,
         synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
+  
       inject: [ConfigService],
     }),
     ProductModule,
