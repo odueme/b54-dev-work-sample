@@ -43,7 +43,7 @@ export class CartService {
     const product = await this.productsService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
   
-    // Confirm the product and user exist.
+    
     if (product && authUser) {
       
       
@@ -82,34 +82,35 @@ export class CartService {
    
 
     let arr = []
-    const emailUser = await this.userRepository.findOneBy({email: email})
+    
     userCart.filter(item =>{
-      arr.push({Name: item.item.name, price: item.item.price, Quantity: item.item.quantity})        
+      arr.push({Name: item.item.name, price: item.item.price, Quantity: item.item.quantity}) 
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "uodueme@gmail.com",
+          pass: "rcnbvkjsujncjuhs"
+        }
+       })
+  
+       const options = {
+        from: "uodueme@gmail.com",
+        to: "odueme2082@student.babcock.edu.ng",
+        subject: "sending email with node",
+        text: `Hello ${email} your order is ${item.item.cart}`
+       }
+  
+       transporter.sendMail(options, (err, info) =>{
+        if(err){
+          console.log(err)
+          return
+        }
+        console.log(info.res)
+  
+       })       
     })
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "uodueme@gmail.com",
-        pass: "rcnbvkjsujncjuhs"
-      }
-     })
-
-     const options = {
-      from: "uodueme@gmail.com",
-      to: "odueme2082@student.babcock.edu.ng",
-      subject: "sending email with node",
-      text: `Hello ${emailUser} your order is ${arr}`
-     }
-
-     transporter.sendMail(options, (err, info) =>{
-      if(err){
-        console.log(err)
-        return
-      }
-      console.log(info.res)
-
-     })
+ 
     
     return (await userCart).filter((item) => item.user.username === user);
   }
