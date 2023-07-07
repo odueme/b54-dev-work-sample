@@ -81,7 +81,7 @@ export class CartService {
             console.log(info.res)
       
            })    
-        }
+        
         
         return await this.cartRepository.save(existingCartItem);
       }
@@ -95,7 +95,7 @@ export class CartService {
       });
 
       
-      
+  
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -119,7 +119,7 @@ export class CartService {
           console.log(info.res)
     
          })    
-      }
+      
 
       
     
