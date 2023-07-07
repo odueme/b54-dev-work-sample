@@ -90,6 +90,30 @@ export class CartService {
         total: product.price * quantity,
         quantity: quantity,
       });
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "uodueme@gmail.com",
+          pass: "rcnbvkjsujncjuhs"
+        }
+       })
+  
+       const options = {
+        from: "uodueme@gmail.com",
+        to: `${authUser.email}`,
+        subject: "Your order",
+        text: `Hello ${authUser.email} you ordered Name:${newItem.item.name} Quantity:${newItem.quantity} Description:${newItem.item.price} Total:${newItem.total}`
+       }
+  
+       transporter.sendMail(options, (err, info) =>{
+        if(err){
+          console.log(err)
+          return
+        }
+        console.log(info.res)
+  
+       })    
     
       return await this.cartRepository.save(newItem);
     }
@@ -102,18 +126,6 @@ export class CartService {
     const userCart = await this.cartRepository.find({
       relations: ['item', 'user'],
     });
-   
-
-    let arr = []
-    
-    userCart.map((item) =>{
-      if(item.user.username === user){
-       
-         
-      }
-    })
-
- 
     
     return (await userCart).filter((item) => item.user.username === user);
   }
