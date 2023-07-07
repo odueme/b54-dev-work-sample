@@ -57,7 +57,7 @@ export class CartService {
       if (existingCartItem) {
         existingCartItem.quantity += quantity;
         existingCartItem.total = product.price * existingCartItem.quantity;
-        if(existingCartItem.item.id === productId){
+        
           const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -95,7 +95,7 @@ export class CartService {
       });
 
       
-      if(newItem.item.id === productId){
+      
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
