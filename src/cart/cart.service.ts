@@ -57,6 +57,45 @@ export class CartService {
       if (existingCartItem) {
         existingCartItem.quantity += quantity;
         existingCartItem.total = product.price * existingCartItem.quantity;
+        if(existingCartItem.item.id === productId){
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "uodueme@gmail.com",
+              pass: "rcnbvkjsujncjuhs"
+            }
+           })
+      
+           const options = {
+            from: "uodueme@gmail.com",
+            to: `${authUser.email}`,
+            subject: "Your order",
+            text: `Hello ${authUser.email} you ordered Name:${existingCartItem.item.name} Quantity:${existingCartItem.quantity} Description:${existingCartItem.item.price} Total:${existingCartItem.total}`
+           }
+      
+           transporter.sendMail(options, (err, info) =>{
+            if(err){
+              console.log(err)
+              return
+            }
+            console.log(info.res)
+      
+           })    
+        }
+        
+        return await this.cartRepository.save(existingCartItem);
+      }
+  
+      
+      const newItem = this.cartRepository.create({
+        user: authUser,
+        item: product,
+        total: product.price * quantity,
+        quantity: quantity,
+      });
+
+      
+      if(newItem.item.id === productId){
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -69,7 +108,7 @@ export class CartService {
           from: "uodueme@gmail.com",
           to: `${authUser.email}`,
           subject: "Your order",
-          text: `Hello ${authUser.email} you ordered Name:${existingCartItem.item.name} Quantity:${existingCartItem.quantity} Description:${existingCartItem.item.price} Total:${existingCartItem.total}`
+          text: `Hello ${authUser.username} you ordered Name:${newItem.item.name} Quantity:${newItem.quantity} Description:${newItem.item.price} Total:${newItem.total}`
          }
     
          transporter.sendMail(options, (err, info) =>{
@@ -80,40 +119,9 @@ export class CartService {
           console.log(info.res)
     
          })    
-        return await this.cartRepository.save(existingCartItem);
       }
-  
-      
-      const newItem = this.cartRepository.create({
-        user: authUser,
-        item: product,
-        total: product.price * quantity,
-        quantity: quantity,
-      });
 
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "uodueme@gmail.com",
-          pass: "rcnbvkjsujncjuhs"
-        }
-       })
-  
-       const options = {
-        from: "uodueme@gmail.com",
-        to: `${authUser.email}`,
-        subject: "Your order",
-        text: `Hello ${authUser.username} you ordered Name:${newItem.item.name} Quantity:${newItem.quantity} Description:${newItem.item.price} Total:${newItem.total}`
-       }
-  
-       transporter.sendMail(options, (err, info) =>{
-        if(err){
-          console.log(err)
-          return
-        }
-        console.log(info.res)
-  
-       })    
+      
     
       return await this.cartRepository.save(newItem);
     }
