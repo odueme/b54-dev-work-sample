@@ -3,7 +3,7 @@ import {UpdateResult, DeleteResult} from 'typeorm';
 import { ProductService } from './product.service';
 import { ProductEntity } from './product.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { AuthGuard } from '@nestjs/passport';
+
 
 @Controller('api/v1/products')
 export class ProductController {

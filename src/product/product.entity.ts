@@ -17,7 +17,7 @@ export class ProductEntity {
 
    @Column({
       nullable: false,
-   
+      
   })
    price: number
    

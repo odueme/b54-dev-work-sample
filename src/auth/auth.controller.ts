@@ -7,7 +7,7 @@ import { Users } from './user.entity';
 export class AuthController {
    constructor(private usersService: AuthService) { }
   
- 
+   @UseGuards(AuthGuard('local'))
    @Post('signup')
    async signup(@Body() user: Users): Promise<Users> {
        return this.usersService.signup(user);
