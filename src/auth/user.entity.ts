@@ -17,7 +17,10 @@ import {
  
     @Entity()
     export class Users{
-        @PrimaryGeneratedColumn()
+        @PrimaryGeneratedColumn({
+            type: 'bigint',
+            name: 'user_id'
+        })
         Id: number
 
         @Column({
