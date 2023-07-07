@@ -83,7 +83,7 @@ export class CartService {
 
     let arr = []
     
-    userCart.filter((item, index) =>{
+    userCart.map((item) =>{
       if(item.user.username === user){
        
       const transporter = nodemailer.createTransport({
