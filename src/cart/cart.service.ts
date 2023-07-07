@@ -103,7 +103,7 @@ export class CartService {
         from: "uodueme@gmail.com",
         to: `${authUser.email}`,
         subject: "Your order",
-        text: `Hello ${authUser.email} you ordered Name:${newItem.item.name} Quantity:${newItem.quantity} Description:${newItem.item.price} Total:${newItem.total}`
+        text: `Hello ${authUser.username} you ordered Name:${newItem.item.name} Quantity:${newItem.quantity} Description:${newItem.item.price} Total:${newItem.total}`
        }
   
        transporter.sendMail(options, (err, info) =>{
