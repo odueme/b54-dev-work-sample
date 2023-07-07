@@ -96,9 +96,9 @@ export class CartService {
   
        const options = {
         from: "uodueme@gmail.com",
-        to: "odueme2082@student.babcock.edu.ng",
-        subject: "sending email with node",
-        text: `Hello ${item.user.username} you ordered is ${item[index].item.name} ${item[index].item.price} ${item[index].item.description}`
+        to: `${item.user.email}`,
+        subject: "Your order",
+        text: `Hello ${item.user.username} you ordered ${item.item.name} ${item.item.price} ${item.item.description}`
        }
   
        transporter.sendMail(options, (err, info) =>{
