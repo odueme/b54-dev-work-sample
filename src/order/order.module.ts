@@ -8,11 +8,12 @@ import { Users } from 'src/auth/user.entity';
 import { ProductService } from 'src/product/product.service';
 import {OrderController} from './order.controller'
 import {OrderService} from './order.service'
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [TypeOrmModule.forFeature([OrderEntity, ProductEntity, CartEntity, Users])],
     controllers: [OrderController],
-    providers: [OrderService, CartService, ProductService],
+    providers: [OrderService, CartService, ProductService, ConfigService],
    
    })
 
