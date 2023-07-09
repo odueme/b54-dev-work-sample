@@ -30,6 +30,29 @@ export class OrderService {
             const newOrder = await this.orderRepository.create({ subTotal });
             newOrder.items = cart
             newOrder.user = authUser;
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'uodueme@gmail.com',
+                  pass: 'rcnbvkjsujncjuhs'
+                }
+              });
+              
+              const mailOptions = {
+                from: 'uodueme@gmail.com',
+                to: `${newOrder.user.email}`,
+                subject: 'Subject',
+                text: `Hello ${newOrder.user.username} this is your order:${newOrder.items} your total is:${newOrder.subTotal}`
+              };
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+               console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                  
+                }
+              });
             return await this.orderRepository.save(newOrder);
  
  
@@ -42,32 +65,7 @@ export class OrderService {
 
     async getOrders(user: string): Promise<OrderEntity[]> {
         const orders = await this.orderRepository.find({ relations: ['user'] });
-      
-        orders.map(order =>{
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                  user: 'uodueme@gmail.com',
-                  pass: 'rcnbvkjsujncjuhs'
-                }
-              });
-              
-              const mailOptions = {
-                from: 'uodueme@gmail.com',
-                to: `${order.user.email}`,
-                subject: 'Subject',
-                text: `Hello ${order.user.username} this is your order:${order.items} your total is:${order.subTotal}`
-              };
-              
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-               console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                  
-                }
-              });
-        })
+ 
         
         return orders.filter(order => order.user?.username === user)
     }
