@@ -32,27 +32,25 @@ export class CartService {
     const product = await this.productService.getOne(productId);
     const authUser = await this.userRepository.findOneBy({ username: user });
   
-    // Confirm the product exists.
     if (product) {
-      const existingCartItem = cartItems.find(
-        (item) => item.item.id === productId && item.user.username === user
+      const cart = cartItems.filter(
+          (item) => item.item.id === productId && item.user.username === user,
       );
-  
-      if (existingCartItem) {
-        existingCartItem.quantity += quantity;
-        existingCartItem.total = existingCartItem.item.price * existingCartItem.quantity;
-        return await this.cartRepository.save(existingCartItem);
+      if (cart.length < 1) {
+
+          const newItem = this.cartRepository.create({ total: product.price * quantity, quantity });
+          newItem.user = authUser;
+          newItem.item = product;
+          this.cartRepository.save(newItem)
+
+
+          return await this.cartRepository.save(newItem)
+      } else {
+          const quantity = (cart[0].quantity += 1);
+          const total = cart[0].total * quantity;
+
+          return await this.cartRepository.update(cart[0].id, { quantity, total });
       }
-  
-      const newItem = this.cartRepository.create({
-        user: authUser,
-        item: product,
-        total: product.price * quantity,
-        quantity: quantity,
-        price: product.price, 
-      }  as DeepPartial<CartEntity>)
-  
-      return await this.cartRepository.save(newItem);
     }
   
     return null;
