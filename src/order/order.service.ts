@@ -43,8 +43,8 @@ export class OrderService {
               const mailOptions = {
                 from: 'uodueme@gmail.com',
                 to: `${newOrder.user.email}`,
-                subject: 'Subject',
-                text: `Hello ${newOrder.user.username} this is your order: Name:${item.name} price:${item.price} description:${item.description} and your total is:${newOrder.subTotal}`
+                subject: 'Your Order',
+                text: `Hello ${newOrder.user.username} this is your order: Name : ${item.name} price : ${item.price} Description : ${item.description} and your total is : ${newOrder.subTotal}`
               };
               
               transporter.sendMail(mailOptions, function(error, info){
