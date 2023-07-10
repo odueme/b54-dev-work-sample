@@ -21,11 +21,11 @@ export class ProductEntity {
   
    price: number
    
-   @Column({
-      nullable: false,
-      default: ''
-  })
-   quantity: string
+//    @Column({
+//       nullable: false,
+//       default: ''
+//   })
+//    quantity: string
 
    @Column({
       nullable: false,
