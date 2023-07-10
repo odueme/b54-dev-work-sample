@@ -4,8 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CartEntity } from './cart.entity';
 import { ProductService } from 'src/product/product.service';
 import { Users } from 'src/auth/user.entity';
-import { ConfigService } from '@nestjs/config';
-import { DeepPartial } from 'typeorm';
 
 
 
@@ -38,9 +36,6 @@ export class CartService {
       );
       if (cart.length < 1) {
 
-          // const newItem = this.cartRepository.create({ total: product.price * quantity, quantity });
-          // newItem.user = authUser;
-          // newItem.item = product;
           return await  this.cartRepository.save({user: authUser, item: product, total: product.price * quantity, quantity: quantity })
            
       } else {
