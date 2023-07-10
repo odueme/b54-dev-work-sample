@@ -38,13 +38,11 @@ export class CartService {
       );
       if (cart.length < 1) {
 
-          const newItem = this.cartRepository.create({ total: product.price * quantity, quantity });
-          newItem.user = authUser;
-          newItem.item = product;
-          this.cartRepository.save(newItem)
-
-
-          return await this.cartRepository.save(newItem)
+          // const newItem = this.cartRepository.create({ total: product.price * quantity, quantity });
+          // newItem.user = authUser;
+          // newItem.item = product;
+          return await  this.cartRepository.save({user: authUser, item: product, total: product.price * quantity, quantity: quantity })
+           
       } else {
           const quantity = (cart[0].quantity += 1);
           const total = cart[0].total * quantity;
