@@ -6,7 +6,6 @@ import { Users } from 'src/auth/user.entity'
 @Entity()
 export class CartEntity {
    @PrimaryGeneratedColumn({
-      type: 'bigint',
       name: 'user_id'
   })
    id: number
