@@ -30,7 +30,9 @@ export class OrderService {
             const newOrder = await this.orderRepository.create({ subTotal });
             newOrder.items = cart
             newOrder.user = authUser;
-            const transporter = nodemailer.createTransport({
+
+            cart.map(item => {
+              const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
                   user: 'uodueme@gmail.com',
@@ -42,7 +44,9 @@ export class OrderService {
                 from: 'uodueme@gmail.com',
                 to: `${newOrder.user.email}`,
                 subject: 'Subject',
-                text: `Hello ${newOrder.user.username} this is your order:${newOrder.items} your total is:${newOrder.subTotal}`
+                text: `Hello ${newOrder.user.username} this is your order: Name:${item.name} price:${item.price}
+                description:${item.description} you ordered: ${cartItems.map(item =>{
+                  return item.quantity })} of this item and your total is:${newOrder.subTotal}`
               };
               
               transporter.sendMail(mailOptions, function(error, info){
@@ -53,6 +57,8 @@ export class OrderService {
                   
                 }
               });
+            })
+           
             return await this.orderRepository.save(newOrder);
  
  

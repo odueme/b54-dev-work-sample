@@ -4,8 +4,7 @@ import { CartEntity } from 'src/cart/cart.entity'
 @Entity()
 export class ProductEntity {
    @PrimaryGeneratedColumn({
-      type: 'bigint',
-      name: 'user_id'
+      name: 'produc_id'
   })
    id: number
 
