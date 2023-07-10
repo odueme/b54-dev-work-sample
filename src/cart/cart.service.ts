@@ -40,7 +40,7 @@ export class CartService {
   
       if (existingCartItem) {
         existingCartItem.quantity += quantity;
-        existingCartItem.total = product.price * existingCartItem.quantity;
+        existingCartItem.total = existingCartItem.item.price * existingCartItem.quantity;
         return await this.cartRepository.save(existingCartItem);
       }
   
@@ -49,7 +49,7 @@ export class CartService {
         item: product,
         total: product.price * quantity,
         quantity: quantity,
-        price: product.price, // Add this line to set the price property
+        price: product.price, 
       }  as DeepPartial<CartEntity>)
   
       return await this.cartRepository.save(newItem);
