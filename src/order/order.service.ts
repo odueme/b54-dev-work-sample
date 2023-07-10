@@ -44,9 +44,7 @@ export class OrderService {
                 from: 'uodueme@gmail.com',
                 to: `${newOrder.user.email}`,
                 subject: 'Subject',
-                text: `Hello ${newOrder.user.username} this is your order: Name:${item.name} price:${item.price}
-                description:${item.description} you ordered: ${cartItems.map(item =>{
-                  return item.quantity })} of this item and your total is:${newOrder.subTotal}`
+                text: `Hello ${newOrder.user.username} this is your order: Name:${item.name} price:${item.price} description:${item.description} and your total is:${newOrder.subTotal}`
               };
               
               transporter.sendMail(mailOptions, function(error, info){
